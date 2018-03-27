@@ -224,7 +224,13 @@ extension ImagesController: UICollectionViewDataSource, UICollectionViewDelegate
     if cart.images.contains(item) {
       cart.remove(item)
     } else {
-      if Config.Camera.imageLimit == 0 || Config.Camera.imageLimit > cart.images.count{
+      let imageLimit = Config.Camera.imageLimit
+      if imageLimit == 0 {
+        cart.add(item)
+      } else if imageLimit > cart.images.count {
+        cart.add(item)
+      } else if imageLimit == 1 {
+        cart.reset()
         cart.add(item)
       }
     }
